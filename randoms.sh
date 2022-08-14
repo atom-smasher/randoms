@@ -2,7 +2,7 @@
 
 ## atom's "randoms" script
 ## v1.01, 18 Nov 2019, (c) atom(@)smasher.org
-## v1.01f, 09 may 2022, (c) atom(@)smasher.org
+## v1.01g, 14 aug 2022, (c) atom(@)smasher.org
 ## Distributed under the GNU General Public License
 ## http://www.gnu.org/copyleft/gpl.html
 ## originally posted - https://www.snbforums.com/threads/script-for-creating-random-numbers-and-more.60182/
@@ -118,11 +118,11 @@ exit 0
 ##    advantages to using /dev/urandom (such as portability and periodic reseeding)
 ## this is included here for reference and experimentation. have fun with it.
 ### rc4 is fast and does a good job passing the dieharder tests.
-### "tail -c +17" strips out the "Salted__xxxxxxxx" string.
+### "tail -c +17" strips out the "Salted__xxxxxxxx" string; so does "-nosalt", which is more efficient
 ### "2> /dev/random" pipes openssl's errors into /dev/random; use /dev/null if needed.
 ### "head -c 16 /dev/urandom" derives a 128 bit password, read by "-pass stdin".
 n=1
-head -c 16 /dev/urandom | openssl enc -rc4 -pass stdin -in /dev/zero 2> /dev/random | tail -c +17 | while :
+head -c 16 /dev/urandom | openssl enc -rc4 -iter 1 -nosalt -pass stdin -in /dev/zero | while :
 do
     ## go through this loop once per line of output
     ## this gives output strings of arbitrary length
