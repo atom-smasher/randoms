@@ -6,14 +6,15 @@ This is one of those scripts I should have written a long time ago.
 Here's the output from running the script with the `-h` option:
 ```
 randoms: usage:
-    randoms [-f|-F|-8|-p] [d [l]]
+    randoms [-f|-F|-8|-p] [DIGITS [LINES]]
 
-    -f: hexadecimal output
-    -F: hexadecimal output, with upper-case letters
-    -8: octal output
-    -p: random passwords
-    d: number of digits (or characters) output per line
-    l: number of output lines
+    -f:     hexadecimal output
+    -F:     hexadecimal output, with upper-case letters
+    -8:     octal output
+    -p:     random passwords
+    DIGITS: number of digits (or characters) output per line
+    LINES:  number of output lines
+        "-" LINES continues without limit
     ** Default output is decimal format, 18 digits, 1 line
 
 Examples:
@@ -37,4 +38,5 @@ Examples:
 
 * Print a (valid) random UUID (of a known or unknown variant; DCE, NCS, Microsoft, undefined):
     randoms -f 31 | sed -E 's/(.{8})(.{4})(.{3})(.{4})/\1-\2-4\3-\4-/'
+
 ```
