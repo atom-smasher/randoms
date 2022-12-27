@@ -2,7 +2,7 @@
 
 ## atom's "randoms" script
 ## v1.01, 18 Nov 2019, (c) atom(@)smasher.org
-## v1.2a, 27 Dec 2022, (c) atom(@)smasher.org
+## v1.2b, 27 Dec 2022, (c) atom(@)smasher.org
 ## https://github.com/atom-smasher/randoms
 ## Distributed under the GNU General Public License
 ## http://www.gnu.org/copyleft/gpl.html
@@ -21,8 +21,7 @@ help () {
     echo '    -d:     decimal output, with no leading zeros'
     echo '    -p:     random passwords'
     echo '    DIGITS: number of digits (or characters) output per line'
-    echo '    LINES:  number of output lines'
-    echo '        "-" LINES continues without limit'
+    echo '    LINES:  number of output lines, or "-" for unlimited'
     echo '    ** Default output is decimal format, 18 digits, 1 line'
     echo
     echo 'Examples:'
