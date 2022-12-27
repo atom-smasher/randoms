@@ -6,8 +6,7 @@ This is one of those scripts I should have written a long time ago.
 Here's the output from running the script with the `-h` option:
 ```
 randoms: usage:
-    randoms [-f|-F|-8|-p] [DIGITS [LINES]]
-
+  randoms [-f|-F|-x|-X|-8|-o|-d|-p] [DIGITS [LINES]]
     -f:     hexadecimal output
     -F:     hexadecimal output, with upper-case letters
     -x:     like "-f", but with "0x" prefixes
