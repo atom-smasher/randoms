@@ -10,7 +10,11 @@ randoms: usage:
 
     -f:     hexadecimal output
     -F:     hexadecimal output, with upper-case letters
+    -x:     like "-f", but with "0x" prefixes
+    -X:     like "-F", but with "0x" prefixes
     -8:     octal output
+    -o:     like "-8", but with "0" prefixes
+    -d:     decimal output, with no leading zeros
     -p:     random passwords
     DIGITS: number of digits (or characters) output per line
     LINES:  number of output lines
