@@ -2,7 +2,7 @@
 
 ## atom's "randoms" script
 ## v1.01, 18 Nov 2019, (c) atom(@)smasher.org
-## v1.2, 27 Dec 2022, (c) atom(@)smasher.org
+## v1.2a, 27 Dec 2022, (c) atom(@)smasher.org
 ## https://github.com/atom-smasher/randoms
 ## Distributed under the GNU General Public License
 ## http://www.gnu.org/copyleft/gpl.html
@@ -11,8 +11,7 @@
 ## this displays on "-h", "--help", or any improper use
 help () {
     echo "$(basename $0): usage:"
-    echo "    $(basename $0) [-f|-F|-8|-p] [DIGITS [LINES]]"
-    echo
+    echo "  $(basename $0) [-f|-F|-x|-X|-8|-o|-d|-p] [DIGITS [LINES]]"
     echo '    -f:     hexadecimal output'
     echo '    -F:     hexadecimal output, with upper-case letters'
     echo '    -x:     like "-f", but with "0x" prefixes'
