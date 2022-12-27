@@ -2,7 +2,7 @@
 
 ## atom's "randoms" script
 ## v1.01, 18 Nov 2019, (c) atom(@)smasher.org
-## v1.01i, 27 Dec 2022, (c) atom(@)smasher.org
+## v1.2, 27 Dec 2022, (c) atom(@)smasher.org
 ## https://github.com/atom-smasher/randoms
 ## Distributed under the GNU General Public License
 ## http://www.gnu.org/copyleft/gpl.html
@@ -15,7 +15,11 @@ help () {
     echo
     echo '    -f:     hexadecimal output'
     echo '    -F:     hexadecimal output, with upper-case letters'
+    echo '    -x:     like "-f", but with "0x" prefixes'
+    echo '    -X:     like "-F", but with "0x" prefixes'
     echo '    -8:     octal output'
+    echo '    -o:     like "-8", but with "0" prefixes'
+    echo '    -d:     decimal output, with no leading zeros'
     echo '    -p:     random passwords'
     echo '    DIGITS: number of digits (or characters) output per line'
     echo '    LINES:  number of output lines'
@@ -48,6 +52,9 @@ help () {
     exit ${1}
 }
 
+## set the default here
+prefix_lines=n
+
 ## test for output format option
 ## thanks Dabombber for this section of code :)
 ## this script does *not* use getopts, because it was originally written for ASUSWRT-Merlin, which does not support getopts in busybox sh
@@ -62,16 +69,40 @@ case "$1" in
 	chars_match='0-9A-F'
 	shift
 	;;
+    '-x')
+	## this gives hexadecimal output, 0x prefix
+	chars_match='0-9a-f'
+	prefix_lines=x
+	shift
+	;;
+    '-X')
+	## this gives hexadecimal output, upper-case letters, 0x prefix
+	chars_match='0-9A-F'
+	prefix_lines=x
+	shift
+	;;
     '-8')
 	## this gives octal output
 	chars_match='0-7'
 	shift
 	;;
+    '-o')
+	## this gives octal output, with "0" prefix
+	chars_match='0-7'
+	prefix_lines=o
+	shift
+	;;	
     '-p')
 	## random passwords
 	chars_match='0-9a-zA-Z<>/\?!@#$%^&*()+=_,.-'
 	## for random passwords, edit the character-set as desired
 	## nb, '!-~' include all "normal" "printable" ASCII characters
+	shift
+	;;
+    -d)
+	## decimal output, strip leading zeros
+	chars_match='0-9'
+	prefix_lines=d
 	shift
 	;;
     -h|--help)
@@ -133,14 +164,37 @@ engine_haveged () {
     haveged -n 0 2> /dev/null | tr -cd "${1}"
 }
 
+print_lines () {
+    ## prefix lines with "0x", if "-x" or "-X" options are used
+    case "${3}" in
+	n)
+	    ## no prefix
+	    engine_urandom "${1}" | fold -w ${2}
+	    ;;
+	x)
+	    ## "0x" prefix
+	    engine_urandom "${1}" | fold -w ${2} | sed 's!^!0x!'
+	    ;;
+	o)
+	    ## "0" prefix
+	    engine_urandom "${1}" | fold -w ${2} | sed 's!^!0!'
+	    ;;
+	d)
+	    ## strip leading zeros
+	    engine_urandom "${1}" | fold -w ${2} | sed 's!^00*!!'
+	    ;;
+    esac
+}
+
 ## print output
 if [ '-' = ${lines_output} ]
 then
     ## if "LINES" is "-", keep spitting out data until killed
-    engine_urandom "${chars_match}" | fold -w ${digits_output}
-    exit 0
+    print_lines "${chars_match}" "${digits_output}" "${prefix_lines}"
 else
     ## print "LINES" lines, then stop
-    engine_urandom "${chars_match}" | fold -w ${digits_output} | head -n ${lines_output}
-    exit 0
+    #engine_urandom "${chars_match}" | fold -w ${digits_output} | head -n ${lines_output}
+    print_lines "${chars_match}" "${digits_output}" "${prefix_lines}" | head -n ${lines_output}
 fi
+
+exit 0
