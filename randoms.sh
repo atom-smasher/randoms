@@ -2,7 +2,7 @@
 
 ## atom's "randoms" script
 ## v1.01, 18 Nov 2019, (c) atom(@)smasher.org
-## v1.2b, 27 Dec 2022, (c) atom(@)smasher.org
+## v1.2c, 27 Dec 2022, (c) atom(@)smasher.org
 ## https://github.com/atom-smasher/randoms
 ## Distributed under the GNU General Public License
 ## http://www.gnu.org/copyleft/gpl.html
@@ -163,7 +163,7 @@ engine_haveged () {
 }
 
 print_lines () {
-    ## prefix lines with "0x", if "-x" or "-X" options are used
+    ## prefix lines, or trim leading zeros, as needed
     case "${3}" in
 	n)
 	    ## no prefix
@@ -182,6 +182,10 @@ print_lines () {
 	    engine_urandom "${1}" | fold -w ${2} | sed 's!^00*!!'
 	    ;;
     esac
+    ## nb, this paste/yes trick is a very slightly faster way to add prefixes to long lists,
+    ##    but it requires process substitution, which is not supported in sh
+    ## just sharing it here as a teachable example
+    ## randoms -f 6 - | paste -d '' <( yes 0x ) - | head -n 10
 }
 
 ## print output
