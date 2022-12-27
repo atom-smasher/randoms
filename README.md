@@ -1,5 +1,5 @@
 # randoms
-Generate random numbers the easy way
+Generate high quality random numbers the easy way
 
 This is one of those scripts I should have written a long time ago.
 
