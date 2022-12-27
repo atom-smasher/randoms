@@ -16,8 +16,7 @@ randoms: usage:
     -d:     decimal output, with no leading zeros
     -p:     random passwords
     DIGITS: number of digits (or characters) output per line
-    LINES:  number of output lines
-        "-" LINES continues without limit
+    LINES:  number of output lines, or "-" for unlimited
     ** Default output is decimal format, 18 digits, 1 line
 
 Examples:
