@@ -2,7 +2,7 @@
 
 ## atom's "randoms" script
 ## v1.01, 18 Nov 2019, (c) atom(@)smasher.org
-## v1.2c, 27 Dec 2022, (c) atom(@)smasher.org
+## v1.2d, 23 Dec 2023, (c) atom(@)smasher.org
 ## https://github.com/atom-smasher/randoms
 ## Distributed under the GNU General Public License
 ## http://www.gnu.org/copyleft/gpl.html
@@ -153,7 +153,11 @@ engine_openssl_rc4 () {
     ##
     ## or, for example, use a 192 bit binary password for aes-192-ctr:
     ##     head -c 24 /dev/urandom | openssl enc -aes-192-ctr -iter 1 -nosalt -pass stdin -in /dev/zero
-    head -c 16 /dev/urandom | openssl enc -rc4 -iter 1 -nosalt -pass stdin -in /dev/zero 2> /dev/null | tr -cd "${1}"
+    head -c 16 /dev/urandom | openssl enc -rc4 -provider legacy -provider default -iter 1 -nosalt -pass stdin -in /dev/zero 2> /dev/null | tr -cd "${1}"
+    ##
+    ## older versions of openssl will need the line below uncommented
+    #head -c 16 /dev/urandom | openssl enc -rc4 -iter 1 -nosalt -pass stdin -in /dev/zero 2> /dev/null | tr -cd "${1}"
+
 }
 
 engine_haveged () {
@@ -184,8 +188,8 @@ print_lines () {
     esac
     ## nb, this paste/yes trick is a very slightly faster way to add prefixes to long lists,
     ##    but it requires process substitution, which is not supported in sh
-    ## just sharing it here as a teachable example
-    ## randoms -f 6 - | paste -d '' <( yes 0x ) - | head -n 10
+    ## just sharing it here as a teachable example:
+    ##    randoms -f 6 - | paste -d '' <( yes 0x ) - | head -n 10
 }
 
 ## print output
